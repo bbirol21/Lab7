@@ -78,7 +78,7 @@ public class Main {
         // ToDo: Get returns via calling returnBook method of library
         // !! Do not forget to handle exceptions
     	lib.returnBook("1234567890123");
-    	lib.returnBook("2345678901234");
+    	//lib.returnBook("2345678901234");
     	lib.returnBook("1111111111111");
     	
 
@@ -90,6 +90,9 @@ public class Main {
         // ToDo: Print all books that includes "Programming" in its name
         lib.printMatchingBooks("Programming");
 
+        
+        System.out.println();
+        lib.printLibraryCatalog();
     }
 }
 
