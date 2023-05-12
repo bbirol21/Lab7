@@ -1,7 +1,10 @@
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 
 import book.*;
@@ -53,11 +56,13 @@ public class Library {
 			bookValidator.validateExistence(books, ISBN, name);
 			//validate loan
 			loanValidator.validateDueDate(dueDate);
+			loanValidator.validateBookExistance(books.get(ISBN));
 		}
 		catch(InvalidLoanException e) {
 			passesValidity = false;
 			System.err.println("InvalidLoanException: " + e.toString());
 		}
+		
 		catch(NoSuchBookException e) {
 			passesValidity = false;
 			System.err.println("NoSuchBookException: " + "Loan aborted because the book with ISBN " + ISBN + " does not exist in the " + name + " library");
@@ -118,6 +123,52 @@ public class Library {
         }
 	}
 	
-	
-	
+	public void printLibraryCatalog() throws FileNotFoundException{
+//		System.out.println("Library catalog:");
+//		for (Book book: books.values()) {
+//			if(book.isAvailable()) {
+//				System.out.println("Book name: " + book.getTitle() + ", ISBN: " + book.getISBN() + "Status: Available");
+//			}
+//			else {
+//				System.out.println("Book name: " + book.getTitle() + ", ISBN: " + book.getISBN() + "Status: On Loan, ");
+//			}
+//		}
+		
+		try {
+            Formatter formatter = new Formatter(new File("libraryCatalog.txt"));
+            for (Book book : books.values()) {
+                String bookName = book.getTitle();
+                String isbn = book.getISBN();
+                boolean isAvailable = book.isAvailable();
+                
+                Loan desiredLoan;
+                for(Loan loan : loans) {
+                	if(loan.getBook().equals(book))
+                		desiredLoan = loan;
+                }
+                
+                
+                String borrower = null;
+                String dueDate = null;
+
+                if (desiredLoan != null) {
+                    borrower = desiredLoan.getBorrower();
+                    dueDate = desiredLoan.getDueDate().toString();
+                }
+
+                if (isAvailable) {
+                    String message = String.format("Book Name: %s, ISBN: %s, Status: Available", bookName, isbn);
+                    System.out.println(message);
+                    formatter.format("%s%n", message);
+                } 
+                else {
+                    String message = String.format("Book Name: %s, ISBN: %s, Status: On Loan - Borrower: %s, Due Date: %s", bookName, isbn, borrower, dueDate);
+                    System.out.println(message);
+                    formatter.format("%s%n", message);
+                }
+            }
+		}catch (FileNotFoundException e) {
+            System.out.println("Error writing to the library catalog file.");
+        }
+	}
 }

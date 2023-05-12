@@ -31,6 +31,8 @@ READ AND SIGN BY WRITING YOUR NAME SURNAME AND STUDENT ID
 SIGNATURE: <Bartu Birol, 79227>
 ********************************************************************************/
 
+
+
 public class Main {
     public static void main(String[] args) throws IOException, InvalidBookException, NoSuchBookException, InvalidLoanException {
         // Create a library
@@ -68,6 +70,7 @@ public class Main {
     	lib.borrowBook("Fatma", "1234567890123", LocalDate.parse("2023-06-05"));
     	lib.borrowBook("Vahideh","2345678901234" , LocalDate.parse("2023-06-10"));
     	lib.borrowBook("Bartu", "123456789012X", LocalDate.parse("2023-06-10"));
+    	lib.borrowBook("Barış", "1111111111111", LocalDate.parse("2023-06-10"));
     	lib.borrowBook("Güneş", "3456789012345", LocalDate.parse("2023-04-10"));
     	
     	
