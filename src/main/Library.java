@@ -141,7 +141,7 @@ public class Library {
                 String isbn = book.getISBN();
                 boolean isAvailable = book.isAvailable();
                 
-                Loan desiredLoan;
+                Loan desiredLoan = null;
                 for(Loan loan : loans) {
                 	if(loan.getBook().equals(book))
                 		desiredLoan = loan;
